@@ -26,24 +26,6 @@ def load_urls(fh, max_urls=-1, load_json=True):
         url_entries = list(url_entries)[:max_urls]
     return url_entries
 
-def vet_link(link):
-    # check if server responds with non-200 status code or link points to a
-    # non-html file
-    link_type, link_status = "", -1
-    try:
-        info = urlopen(link)
-        link_type = info.headers["Content-Type"]
-        link_status = info.status
-    except:
-        pass
-
-    # we want "text/html" only!
-    is_good_link = False
-    if "text/html" in link_type and link_status == 200:
-        is_good_link = True
-
-    return is_good_link, link_type
-
 def raw_download(url, out):
     try:
         info = urllib.request.urlopen(url)
